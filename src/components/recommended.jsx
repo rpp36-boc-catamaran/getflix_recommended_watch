@@ -1,13 +1,12 @@
-import React, {useState}  from "react";
+import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import "swiper/css/pagination";
-import { Pagination } from "swiper";
-//import logo from './getfilxLogo.png';
+import "swiper/css/navigation";
+import "swiper/css/scrollbar";
+import "../main.css";
+import { Navigation, Scrollbar } from "swiper";
 
 //const axios = require('axios');
-
-//import "../main.css";
 
 const Recommended = (props) => {
   // axios.get('/recommended/' + props.movieId)
@@ -15,28 +14,41 @@ const Recommended = (props) => {
   //   console.log('response data recommended', response.data);
   // });
 
-  console.log('recommended comp', props.movies[0].poster_path)
-
+  //console.log('recommended comp', props.movie[0].poster_path)
   return (
     <div className='recommended'>
       <Swiper
-        slidesPerView={6}
-        spaceBetween={30}
-        pagination={{
-          clickable: true,
+        scrollbar={{
+          hide: true,
         }}
-        modules={[Pagination]}
+        slidesPerView={6}
+        spaceBetween={50}
+        navigation={true}
+        modules={[Navigation, Scrollbar]}
         className="mySwiper"
       >
-        <SwiperSlide><img src={`http://image.tmdb.org/t/p/w500${props.movies[0].poster_path}`} alt="rec0"/></SwiperSlide>
-        <SwiperSlide><img src={`http://image.tmdb.org/t/p/w500${props.movies[1].poster_path}`} alt="rec1"/></SwiperSlide>
-        <SwiperSlide><img src={`http://image.tmdb.org/t/p/w500${props.movies[2].poster_path}`} alt="rec2"/></SwiperSlide>
-        <SwiperSlide><img src={`http://image.tmdb.org/t/p/w500${props.movies[3].poster_path}`} alt="rec3"/></SwiperSlide>
-        <SwiperSlide><img src={`http://image.tmdb.org/t/p/w500${props.movies[4].poster_path}`} alt="rec4"/></SwiperSlide>
-        <SwiperSlide><img src={`http://image.tmdb.org/t/p/w500${props.movies[5].poster_path}`} alt="rec5"/></SwiperSlide>
-        <SwiperSlide><img src={`http://image.tmdb.org/t/p/w500${props.movies[6].poster_path}`} alt="rec6"/></SwiperSlide>
-        <SwiperSlide><img src={`http://image.tmdb.org/t/p/w500${props.movies[7].poster_path}`} alt="rec7"/></SwiperSlide>
-        <SwiperSlide><img src={`http://image.tmdb.org/t/p/w500${props.movies[8].poster_path}`} alt="rec8"/></SwiperSlide>
+        {
+          props.movie.map(movie => {
+            return (
+            <SwiperSlide  className='recommended-slide'>
+              <div>
+                <div>
+                  <img
+                    src={"https://image.tmdb.org/t/p/w400" + movie.backdrop_path}
+                    alt = {movie.original_title}
+                  />
+                </div>
+                <div className="recommended-card-title">
+                  {movie.original_title}
+                </div>
+                <div className="recommended-card-watch">
+                  Watchlist Button
+                </div>
+              </div>
+              </SwiperSlide>
+            )
+          })
+        }
       </Swiper>
     </div>
   )
